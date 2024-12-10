@@ -1,5 +1,5 @@
 """
-CS364, Lab 4 Pairwise Sequence Alignment
+CS364, Pairwise Sequence Alignment
 Purpose:
 Making pairwise sequence alignment algorithms
 By applying the Smith-Waterman algorithm, we can assess the similarities and differences in amino acid sequences across species, which may provide insights into their evolutionary relationships.
