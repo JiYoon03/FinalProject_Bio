@@ -5,7 +5,6 @@ Making pairwise sequence alignment algorithms
 By applying the Smith-Waterman algorithm, we can assess the similarities and differences in amino acid sequences across species, which may provide insights into their evolutionary relationships.
 
 Author: jiyoon
-Date: 9/24
 """
 
 #-------------------------------------------------------------------------------
@@ -166,16 +165,26 @@ def back_traceback(dp, seq1, seq2, max_positions, amino_acids, substitution_matr
 
     return alignments
 
-def write_output(alignments, output_file):
+def write_output(alignments, max_score, output_file):
     """
-    Write the alignments to the output file.
+    Write the alignments, score, identity, and gap information to the output file.
     alignments: contatin the alignments that should be save in the output file
+    max_score: max score of the alignment
     output_file: name of file that will contain the output
     """
     with open(output_file, 'w') as f:
+        f.write(f"Alignment score: {max_score}\n")
         for align1, align2, pos1, pos2  in alignments:
             f.write(align1 + '\n')
             f.write(align2 + '\n')
+            
+            # Calculate identity and gaps
+            total_length = len(align2)
+            matches = sum(1 for a, b in zip(align1, align2) if a == b and a != '-' and b != '-')
+            gaps = align1.count('-') + align2.count('-')
+            identity = (matches / total_length) * 100 if total_length > 0 else 0
+            f.write(f"Identity: {identity:.2f}%  Gaps: {gaps}/{total_length}\n")
+            f.write("\n")
             
 
 def main():
@@ -218,7 +227,8 @@ def main():
         gaps = align1.count('-') + align2.count('-') 
         print(f"Identity {matches}/{total_length} Gaps {gaps}/{total_length}\n")
 
-    write_output(alignments, args.o)
+    write_output(alignments, max_score, args.o)
+
 
 
 #-------------------------------------------------------------------------------
