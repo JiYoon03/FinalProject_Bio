@@ -1,0 +1,5 @@
+  dog dingo raccoondog redfox
+dog 0 14 49 43
+dingo 14 0 49 43
+raccoondog 49 49 0 40
+redfox 43 43 40 0
